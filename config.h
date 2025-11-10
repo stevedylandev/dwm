@@ -10,7 +10,7 @@ static const char col_bg[]          = "#121113";  /* background */
 static const char col_fg[]          = "#ffffff";  /* foreground */
 static const char col_selection[]   = "#222222";  /* selection bg */
 static const char col_gray[]        = "#888888";  /* muted gray */
-static const char col_accent[]      = "#fbcb97";  /* accent color */
+static const char col_accent[]      = "#ffffff";  /* accent color */
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_fg,    col_bg,    col_gray     },
@@ -31,7 +31,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -39,9 +39,9 @@ static const int refreshrate = 120;  /* refresh rate (per second) for client mov
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "",      tile },    /* first entry is default */
+	{ "",      NULL },    /* no layout function means floating behavior */
+	{ "",      monocle },
 };
 
 /* key definitions */
@@ -59,7 +59,7 @@ static const Layout layouts[] = {
 static const char *dmenucmd[] = { "rofi", "-show", "drun", NULL };
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *termcmd[]  = { "wezterm", NULL };
-static const char *browsercmd[]  = { "/home/stevedylandev/Applications/helium-0.6.4.1-x86_64_892a013378cdb3a291a71a624890c408.AppImage %U", NULL };
+// static const char *browsercmd[]  = { "/home/stevedylandev/Applications/helium-0.6.4.1-x86_64_892a013378cdb3a291a71a624890c408.AppImage %U", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -76,8 +76,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_h,      movestack,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_l,      movestack,      {.i = +1 } },
-	// { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	// { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_d,      setmfact,       {.f = -0.05} },
+	{ MODKEY|ShiftMask,             XK_i,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
