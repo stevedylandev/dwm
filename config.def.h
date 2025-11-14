@@ -11,7 +11,7 @@ static const char col_bg[]          = "#121113";  /* background */
 static const char col_fg[]          = "#ffffff";  /* foreground */
 static const char col_selection[]   = "#222222";  /* selection bg */
 static const char col_gray[]        = "#888888";  /* muted gray */
-static const char col_accent[]      = "#ffffff";  /* accent color */
+static const char col_accent[]      = "#fbcb97";  /* accent color */
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_fg,    col_bg,    col_gray     },
@@ -27,6 +27,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
+	{ "floatterm", NULL,      NULL,       0,            1,           -1 },
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
@@ -60,15 +61,18 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static const char *dmenucmd[] = { "rofi", "-show", "drun", NULL };
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
+static const char *dmenucmd[] = {"/home/stevedylandev/dwm/list-scripts"};
 static const char *termcmd[]  = { "wezterm", NULL };
+static const char *floattermcmd[]  = { "wezterm", "start", "--class", "floatterm", NULL };
 static const char *browsercmd[]  = { "chromium", "--force-device-scale-factor=1.2", NULL };
+static const char *clipmenucmd[]  = { "clipmenu", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
+	{ Mod1Mask,                     XK_j,      spawn,          {.v = floattermcmd } },
 	{ MODKEY,                       XK_b,			 spawn,          {.v = browsercmd }},
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -82,9 +86,10 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_l,      movestack,      {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_d,      setmfact,       {.f = -0.05} },
 	{ MODKEY|ShiftMask,             XK_i,      setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_c,      spawn,       {.v = clipmenucmd} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	//{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_z,      setlayout,      {.v = &layouts[2]} },
